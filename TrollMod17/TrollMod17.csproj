@@ -4,7 +4,7 @@
         <LangVersion>latest</LangVersion>
         <DebugType>embedded</DebugType>
 
-        <VersionPrefix>1.4.6</VersionPrefix>
+        <VersionPrefix>1.4.9</VersionPrefix>
         <VersionSuffix>dev</VersionSuffix>
         <Description>TrollMod</Description>
         <Authors>AUMods_IT, Manu</Authors>
