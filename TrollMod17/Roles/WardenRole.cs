@@ -2,6 +2,7 @@ using MiraAPI.Roles;
 using MiraAPI.GameOptions;
 using TrollMod17.Options;
 using UnityEngine;
+using Il2CppInterop.Runtime.Attributes;
 
 namespace TrollMod17.Roles;
 
@@ -22,6 +23,7 @@ public class WardenRole : CrewmateRole, ICustomRole
         TasksCountForProgress = true,
     };
 
+    [HideFromIl2Cpp]
     public int? GetCount()
     {
         var inst = OptionGroupSingleton<WardenOptions>.Instance;
@@ -30,6 +32,7 @@ public class WardenRole : CrewmateRole, ICustomRole
         return count;
     }
 
+    [HideFromIl2Cpp]
     public int? GetChance()
     {
         var inst = OptionGroupSingleton<WardenOptions>.Instance;

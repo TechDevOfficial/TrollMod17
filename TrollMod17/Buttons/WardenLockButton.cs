@@ -23,9 +23,6 @@ public class WardenLockButton : CustomActionButton<PlainDoor>
             0,
             5);
 
-    private static readonly MiraKeybind _lockKeybind = new("Warden Lock", KeyboardKeyCode.L);
-    public override BaseKeybind? Keybind => _lockKeybind;
-
     public override float Distance => 2.2f;
 
     public override bool Enabled(RoleBehaviour? role)
