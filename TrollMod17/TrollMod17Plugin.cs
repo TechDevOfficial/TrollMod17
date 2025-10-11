@@ -24,7 +24,7 @@ public partial class TrollModPlugin : BasePlugin, IMiraPlugin
     public Harmony Harmony { get; } = new(Id);
     public string OptionsTitleText => "Troll\nMod";
     public ConfigFile GetConfigFile() => Config;
-    public static string ModVersion = "1.4.9";
+    public static string ModVersion = "1.5.0";
 
     public override void Load()
     {

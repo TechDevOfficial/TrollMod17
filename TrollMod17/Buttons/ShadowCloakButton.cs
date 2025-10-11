@@ -3,6 +3,7 @@ using MiraAPI.Utilities.Assets;
 using UnityEngine;
 using TrollMod17.Networking;
 using Il2CppSystem;
+using TrollMod17.Settings;
 
 namespace TrollMod17.Buttons;
 
@@ -14,6 +15,7 @@ public class ShadowCloakButton : CustomActionButton<PlayerControl>
     public override LoadableAsset<Sprite> Sprite => MiraAssets.RefreshIcon;
     public override int MaxUses => 1;
     public override float Distance => 2.6f;
+    public override ButtonLocation Location => TMLocalSettings.ButtonsPosition == ButtonPos.Left ? ButtonLocation.BottomLeft : ButtonLocation.BottomRight;
 
     public override bool Enabled(RoleBehaviour? role)
     {
@@ -59,5 +61,12 @@ public class ShadowCloakButton : CustomActionButton<PlayerControl>
             AbilityRpcs.ShadowStartBlinkBehind(me, me.PlayerId, Target.PlayerId);
         }
         AbilityRpcs.ShadowStartCloak(me, me.PlayerId, EffectDuration);
+    }
+
+    public override void OnEffectEnd()
+    {
+        if (!AmongUsClient.Instance.AmHost) return;
+        var me = PlayerControl.LocalPlayer;
+        AbilityRpcs.ShadowEndCloak(me, me.PlayerId);
     }
 }

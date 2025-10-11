@@ -73,4 +73,27 @@ public static class AbilityRpcs
         }
         action();
     }
+
+    // Explicit END RPCs to guarantee cleanup across clients
+    [MethodRpc((uint)TrollRpcCalls.ShadowEndCloak, LocalHandling = RpcLocalHandling.None)]
+    public static void ShadowEndCloak(PlayerControl sender, byte playerId)
+    {
+        var p = GetPlayer(playerId);
+        if (!p) return;
+        AbilityCosmetics.RemoveShadowCloak(p);
+    }
+
+    [MethodRpc((uint)TrollRpcCalls.GuardianEndShield, LocalHandling = RpcLocalHandling.None)]
+    public static void GuardianEndShield(PlayerControl sender, byte targetId)
+    {
+        var t = GetPlayer(targetId);
+        if (!t) return;
+        AbilityCosmetics.RemoveShieldTint(t);
+    }
+
+    [MethodRpc((uint)TrollRpcCalls.TricksterEndSmoke, LocalHandling = RpcLocalHandling.None)]
+    public static void TricksterEndSmoke(PlayerControl sender)
+    {
+        AbilityCosmetics.ClearSmokeDarken();
+    }
 }

@@ -3,6 +3,7 @@ using MiraAPI.Utilities.Assets;
 using UnityEngine;
 using TrollMod17.Networking;
 using Il2CppSystem;
+using TrollMod17.Settings;
 
 namespace TrollMod17.Buttons;
 
@@ -15,6 +16,9 @@ public class GuardianShieldButton : CustomActionButton<PlayerControl>
     public override int MaxUses => 1;
 
     public override float Distance => 2.5f;
+    public override ButtonLocation Location => TMLocalSettings.ButtonsPosition == ButtonPos.Left ? ButtonLocation.BottomLeft : ButtonLocation.BottomRight;
+
+    private byte _lastShieldedId;
 
     public override bool Enabled(RoleBehaviour? role)
     {
@@ -55,11 +59,18 @@ public class GuardianShieldButton : CustomActionButton<PlayerControl>
     {
         if (Target == null) return;
         if (!AmongUsClient.Instance.AmHost) return;
+        _lastShieldedId = Target.PlayerId;
         AbilityRpcs.GuardianStartShield(PlayerControl.LocalPlayer, Target.PlayerId, EffectDuration);
     }
     
     public override void OnEffectEnd()
     {
+        if (!AmongUsClient.Instance.AmHost) { ResetTarget(); return; }
+        if (_lastShieldedId != 0)
+        {
+            AbilityRpcs.GuardianEndShield(PlayerControl.LocalPlayer, _lastShieldedId);
+            _lastShieldedId = 0;
+        }
         ResetTarget();
     }
 }
