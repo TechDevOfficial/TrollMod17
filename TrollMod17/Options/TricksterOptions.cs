@@ -10,9 +10,6 @@ public class TricksterOptions : AbstractOptionGroup<TrollMod17.Roles.TricksterRo
     public override string GroupName => "Trickster Options";
     public override Color GroupColor => new Color32(255, 160, 30, 255);
 
-    [ModdedNumberOption("Trickster Count", min: 0, max: 2, increment: 1f, formatString: "0")]
-    public float TricksterCount { get; set; } = 1f;
-
-    [ModdedNumberOption("Trickster Spawn Chance", min: 0, max: 100, increment: 5f, formatString: "0", suffixType: MiraNumberSuffixes.Percent)]
-    public float TricksterSpawnChance { get; set; } = 30f;
+    [ModdedEnumOption("Trickster Max Uses", typeof(MaxUses), new[] { "1", "2", "3", "4", "5", "Infinite" })]
+    public MaxUses TricksterMaxUses { get; set; } = MaxUses.One;
 }

@@ -1,23 +1,20 @@
 using MiraAPI.Roles;
-using MiraAPI.GameOptions;
-using TrollMod17.Options;
 using UnityEngine;
-using Il2CppInterop.Runtime.Attributes;
 
 namespace TrollMod17.Roles;
 
-public class WardenRole : CrewmateRole, ICustomRole
+public class BardRole : CrewmateRole, ICustomRole
 {
-    public string RoleName => "Warden";
-    public string RoleLongDescription => "Temporarily lock nearby doors to protect the area.";
+    public string RoleName => "Bard";
+    public string RoleLongDescription => "Plays a tune that blesses nearby crewmates.";
     public string RoleDescription => RoleLongDescription;
-    public Color RoleColor => new Color32(30, 144, 255, 255);
+    public Color RoleColor => new Color32(255, 210, 70, 255);
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
 
     public CustomRoleConfiguration Configuration => new(this)
     {
         CanUseSabotage = false,
-        MaxRoleCount = 3,
+        MaxRoleCount = 2,
         UseVanillaKillButton = false,
         CanUseVent = false,
         TasksCountForProgress = true,
