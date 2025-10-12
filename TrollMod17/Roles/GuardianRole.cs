@@ -22,22 +22,4 @@ public class GuardianRole : CrewmateRole, ICustomRole
         CanUseVent = false,
         TasksCountForProgress = true,
     };
-
-    [HideFromIl2Cpp]
-    public int? GetCount()
-    {
-        var inst = OptionGroupSingleton<GuardianOptions>.Instance;
-        var value = inst != null ? inst.GuardianCount : 1f;
-        var count = Mathf.Clamp(Mathf.RoundToInt(value), 0, Configuration.MaxRoleCount);
-        return count;
-    }
-
-    [HideFromIl2Cpp]
-    public int? GetChance()
-    {
-        var inst = OptionGroupSingleton<GuardianOptions>.Instance;
-        var value = inst != null ? inst.GuardianSpawnChance : 35f;
-        var chance = Mathf.Clamp(Mathf.RoundToInt(value), 0, 100);
-        return chance;
-    }
 }

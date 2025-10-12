@@ -4,6 +4,8 @@ using UnityEngine;
 using TrollMod17.Networking;
 using Il2CppSystem;
 using TrollMod17.Settings;
+using MiraAPI.GameOptions;
+using TrollMod17.Options;
 
 namespace TrollMod17.Buttons;
 
@@ -13,7 +15,15 @@ public class ShadowCloakButton : CustomActionButton<PlayerControl>
     public override float Cooldown => 25f;
     public override float EffectDuration => 6f;
     public override LoadableAsset<Sprite> Sprite => MiraAssets.RefreshIcon;
-    public override int MaxUses => 1;
+    public override int MaxUses
+    {
+        get
+        {
+            var inst = OptionGroupSingleton<ShadowOptions>.Instance;
+            var value = inst != null ? inst.ShadowMaxUses : global::TrollMod17.Options.MaxUses.One;
+            return (int)value; // Infinite maps to 0
+        }
+    }
     public override float Distance => 2.6f;
     public override ButtonLocation Location => TMLocalSettings.ButtonsPosition == ButtonPos.Left ? ButtonLocation.BottomLeft : ButtonLocation.BottomRight;
 
@@ -54,7 +64,6 @@ public class ShadowCloakButton : CustomActionButton<PlayerControl>
 
     protected override void OnClick()
     {
-        if (!AmongUsClient.Instance.AmHost) return;
         var me = PlayerControl.LocalPlayer;
         if (Target)
         {
@@ -65,7 +74,6 @@ public class ShadowCloakButton : CustomActionButton<PlayerControl>
 
     public override void OnEffectEnd()
     {
-        if (!AmongUsClient.Instance.AmHost) return;
         var me = PlayerControl.LocalPlayer;
         AbilityRpcs.ShadowEndCloak(me, me.PlayerId);
     }

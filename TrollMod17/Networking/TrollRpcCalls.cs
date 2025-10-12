@@ -9,4 +9,8 @@ public enum TrollRpcCalls : uint
     ShadowEndCloak = 4111,
     GuardianEndShield = 4112,
     TricksterEndSmoke = 4113,
+    BardStartTune = 4121,
+    BardEndTune = 4122,
+    IllusionistStartGlimmer = 4123,
+    IllusionistEndGlimmer = 4124,
 }

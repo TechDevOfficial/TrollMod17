@@ -1,16 +1,18 @@
-﻿using BepInEx;
+using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using MiraAPI;
 using MiraAPI.PluginLoading;
 using MiraAPI.Utilities;
+using MiraAPI.Hud;
 using Reactor;
 using Reactor.Networking;
 using Reactor.Networking.Attributes;
 using Reactor.Patches;
 using Reactor.Utilities;
 using UnityEngine;
+using TrollMod17.Buttons;
 
 namespace TrollMod17;
 
@@ -24,7 +26,7 @@ public partial class TrollModPlugin : BasePlugin, IMiraPlugin
     public Harmony Harmony { get; } = new(Id);
     public string OptionsTitleText => "Troll\nMod";
     public ConfigFile GetConfigFile() => Config;
-    public static string ModVersion = "1.5.0";
+    public static string ModVersion = "1.5.1";
 
     public override void Load()
     {

@@ -4,6 +4,8 @@ using UnityEngine;
 using TrollMod17.Networking;
 using Il2CppSystem;
 using TrollMod17.Settings;
+using MiraAPI.GameOptions;
+using TrollMod17.Options;
 
 namespace TrollMod17.Buttons;
 
@@ -13,7 +15,15 @@ public class GuardianShieldButton : CustomActionButton<PlayerControl>
     public override float Cooldown => 25f;
     public override float EffectDuration => 6f;
     public override LoadableAsset<Sprite> Sprite => MiraAssets.RefreshIcon;
-    public override int MaxUses => 1;
+    public override int MaxUses
+    {
+        get
+        {
+            var inst = OptionGroupSingleton<GuardianOptions>.Instance;
+            var value = inst != null ? inst.GuardianMaxUses : global::TrollMod17.Options.MaxUses.One;
+            return (int)value; // Infinite maps to 0
+        }
+    }
 
     public override float Distance => 2.5f;
     public override ButtonLocation Location => TMLocalSettings.ButtonsPosition == ButtonPos.Left ? ButtonLocation.BottomLeft : ButtonLocation.BottomRight;
@@ -58,14 +68,12 @@ public class GuardianShieldButton : CustomActionButton<PlayerControl>
     protected override void OnClick()
     {
         if (Target == null) return;
-        if (!AmongUsClient.Instance.AmHost) return;
         _lastShieldedId = Target.PlayerId;
         AbilityRpcs.GuardianStartShield(PlayerControl.LocalPlayer, Target.PlayerId, EffectDuration);
     }
     
     public override void OnEffectEnd()
     {
-        if (!AmongUsClient.Instance.AmHost) { ResetTarget(); return; }
         if (_lastShieldedId != 0)
         {
             AbilityRpcs.GuardianEndShield(PlayerControl.LocalPlayer, _lastShieldedId);
