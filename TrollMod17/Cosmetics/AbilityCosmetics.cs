@@ -8,21 +8,23 @@ namespace TrollMod17.Cosmetics;
 
 public static class AbilityCosmetics
 {
-    // Among Us native cosmetics-backed state
     private static readonly Dictionary<PlayerControl, float> _savedPhantomAlpha = new();
     private static readonly HashSet<PlayerControl> _shielded = new();
     private static readonly HashSet<PlayerControl> _smoked = new();
+    private static readonly Dictionary<PlayerControl, Color> _originalColors = new();
+    private static readonly HashSet<PlayerControl> _tuned = new();
+    private static readonly HashSet<PlayerControl> _glimmered = new();
+    private static readonly Dictionary<PlayerControl, float> _glimmerAlpha = new();
 
     public static void ApplyShadowCloak(PlayerControl p, float alphaFactor)
     {
         if (!p || p.cosmetics == null) return;
-        // Save current phantom alpha, then set reduced alpha
         try
         {
             var current = p.cosmetics.GetPhantomRoleAlpha();
             _savedPhantomAlpha[p] = current;
         }
-        catch { /* ignore */ }
+        catch { }
         p.cosmetics.SetPhantomRoleAlpha(Mathf.Clamp01(alphaFactor));
     }
 
@@ -36,7 +38,6 @@ public static class AbilityCosmetics
         }
         else
         {
-            // fallback reset
             p.cosmetics.SetPhantomRoleAlpha(1f);
         }
     }
@@ -60,24 +61,43 @@ public static class AbilityCosmetics
 
     public static void ApplySmokeDarkenInRadius(Vector2 center, float radius)
     {
+        ClearSmokeDarken();
+        
         foreach (var pc in PlayerControl.AllPlayerControls)
         {
             if (!pc || pc.cosmetics == null) continue;
             var d = Vector2.Distance(center, pc.GetTruePosition());
             if (d > radius) continue;
-            pc.cosmetics.FadeBlackCosmetics(0.6f);
-            _smoked.Add(pc);
+            
+            if (pc.cosmetics.currentBodySprite != null && pc.cosmetics.currentBodySprite.BodySprite != null)
+            {
+                var sprite = pc.cosmetics.currentBodySprite.BodySprite;
+                _originalColors[pc] = sprite.color;
+                
+                var darkenedColor = new Color(0.1f, 0.1f, 0.1f, sprite.color.a);
+                sprite.color = darkenedColor;
+                
+                _smoked.Add(pc);
+            }
         }
     }
 
     public static void ClearSmokeDarken()
     {
-        foreach (var p in _smoked)
+        foreach (var pc in _smoked)
         {
-            if (!p || p.cosmetics == null) continue;
-            p.cosmetics.FadeBlackCosmetics(0f);
+            if (!pc || pc.cosmetics == null) continue;
+            
+            if (_originalColors.TryGetValue(pc, out var originalColor) && 
+                pc.cosmetics.currentBodySprite != null && 
+                pc.cosmetics.currentBodySprite.BodySprite != null)
+            {
+                pc.cosmetics.currentBodySprite.BodySprite.color = originalColor;
+            }
         }
+        
         _smoked.Clear();
+        _originalColors.Clear();
     }
 
     public static void SpawnPulseRing(Vector2 center, Color color, float duration)
@@ -108,5 +128,63 @@ public static class AbilityCosmetics
         }
 
         if (go) UnityEngine.Object.Destroy(go);
+    }
+
+    public static void ApplyTuneGlow(Vector2 center, float radius)
+    {
+        foreach (var pc in PlayerControl.AllPlayerControls)
+        {
+            if (!pc || pc.cosmetics == null) continue;
+            var d = Vector2.Distance(center, pc.GetTruePosition());
+            if (d > radius) continue;
+            pc.cosmetics.SetOutline(true, new Nullable<Color>(new Color(1f, 0.9f, 0.2f, 1f)));
+            _tuned.Add(pc);
+        }
+    }
+
+    public static void ClearTuneGlow()
+    {
+        foreach (var pc in _tuned)
+        {
+            if (!pc || pc.cosmetics == null) continue;
+            pc.cosmetics.SetOutline(false, new Nullable<Color>());
+        }
+        _tuned.Clear();
+    }
+
+    public static void ApplyGlimmerInRadius(Vector2 center, float radius)
+    {
+        foreach (var pc in PlayerControl.AllPlayerControls)
+        {
+            if (!pc || pc.cosmetics == null) continue;
+            var d = Vector2.Distance(center, pc.GetTruePosition());
+            if (d > radius) continue;
+            if (!_glimmerAlpha.ContainsKey(pc))
+            {
+                float a = 1f;
+                try { a = pc.cosmetics.GetPhantomRoleAlpha(); } catch { }
+                _glimmerAlpha[pc] = a;
+            }
+            pc.cosmetics.SetPhantomRoleAlpha(0.5f);
+            _glimmered.Add(pc);
+        }
+    }
+
+    public static void ClearGlimmer()
+    {
+        foreach (var pc in _glimmered)
+        {
+            if (!pc || pc.cosmetics == null) continue;
+            if (_glimmerAlpha.TryGetValue(pc, out var a))
+            {
+                pc.cosmetics.SetPhantomRoleAlpha(a);
+            }
+            else
+            {
+                pc.cosmetics.SetPhantomRoleAlpha(1f);
+            }
+        }
+        _glimmered.Clear();
+        _glimmerAlpha.Clear();
     }
 }

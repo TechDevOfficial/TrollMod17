@@ -22,22 +22,4 @@ public class ShadowRole : ImpostorRole, ICustomRole
         CanUseVent = true,
         TasksCountForProgress = false,
     };
-
-    [HideFromIl2Cpp]
-    public int? GetCount()
-    {
-        var inst = OptionGroupSingleton<ShadowOptions>.Instance;
-        var value = inst != null ? inst.ShadowCount : 1f;
-        var count = Mathf.Clamp(Mathf.RoundToInt(value), 0, Configuration.MaxRoleCount);
-        return count;
-    }
-
-    [HideFromIl2Cpp]
-    public int? GetChance()
-    {
-        var inst = OptionGroupSingleton<ShadowOptions>.Instance;
-        var value = inst != null ? inst.ShadowSpawnChance : 40f;
-        var chance = Mathf.Clamp(Mathf.RoundToInt(value), 0, 100);
-        return chance;
-    }
 }
