@@ -5,7 +5,7 @@ TrollMod is an Among Us Mod Bundle built with MiraAPI and Reactor
 
 | AU Version | TM Version | Link |
 |---|---|---|
-| 17.0.0 | 1.5.4 | [Download](https://github.com/TechDevOfficial/TrollMod17/releases/tag/1.5.4) |
+| 17.1.0+ | 1.5.4 | [Download](https://github.com/TechDevOfficial/TrollMod17/releases/tag/1.5.4) |
 | 17.0.0 | 1.5.1 | [Download](https://github.com/TechDevOfficial/TrollMod17/releases/tag/1.5.1) |
 | 17.0.0 | 1.5.0 | [Download](https://github.com/TechDevOfficial/TrollMod17/releases/tag/1.5.0) |
 | 17.0.0 | 1.4.9 | [Download](https://github.com/TechDevOfficial/TrollMod17/releases/tag/1.4.9) |
