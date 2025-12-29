@@ -2,7 +2,7 @@
 
 ## Short Description
 
-TrollMod adds 9 unique custom roles to Among Us with synchronized abilities and full RPC support. Features crewmates like Guardian and Medic with revive capabilities, neutral roles like Troll and Jester with unique win conditions, and impostors like Shadow and Warden. Compatible with Among Us v17.0.0.
+TrollMod adds 9 unique custom roles to Among Us with synchronized abilities and full RPC support. Features crewmates like Guardian and Medic with revive capabilities, neutral roles like Troll and Jester with unique win conditions, and impostors like Shadow and Warden. Compatible with Among Us v17.1.0.
 
 ---
 
@@ -59,7 +59,7 @@ TrollMod adds 9 unique custom roles to Among Us with synchronized abilities and 
 - Configurable role counts and ability parameters
 
 **Technical Details:**
-- Compatible with Among Us v17.0.0 (2025.1.17)
+- Compatible with Among Us v17.1.0 (2025.11.18)
 - Requires BepInEx 6.0.0+
 - Optimized for both PC and Android platforms
 - Full multiplayer synchronization support
