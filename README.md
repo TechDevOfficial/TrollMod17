@@ -11,6 +11,8 @@ TrollMod is an Among Us Mod Bundle built with MiraAPI and Reactor
 | 17.0.0 | 1.4.9 | [Download](https://github.com/TechDevOfficial/TrollMod17/releases/tag/1.4.9) |
 | 17.0.0 | 1.4.6 | [Download](https://github.com/TechDevOfficial/TrollMod17/releases/tag/1.4.6) |
 
+<img width="410" height="200" alt="image" src="https://github.com/user-attachments/assets/914c57db-30b1-41d2-ba9e-668fe479e0bc" />
+
 ### Now available on Starlight Android Launcher: [Starlight Web Page](https://starlight.yanplahosting.com/mods/manu.trollmod) download now on Google Play [Download](https://play.google.com/store/apps/details?id=dev.allofus.starlight)
 
 ## Roles (9 Total)
