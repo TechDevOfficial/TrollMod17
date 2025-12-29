@@ -1,6 +1,6 @@
 # TrollMod Changelog
 
-## v1.5.4 - Among Us 2025.1.17 (v17.1.0)
+## v1.5.4 - Among Us 2025.11.18 (v17.1.0)
 
 **Updated for Among Us v17.1.0** - Full compatibility with the latest game version.
 
